@@ -30,7 +30,6 @@ addresses = ["9 Smalldale Road, Birmingham, B42 2RX",
   "Gwynfa, Cae Garw, Llanfair, LL46 2RL", 
   "4 West Court, Braybrooke Road, Market Harborough, LE16 8GB",
   "6 Swanholme Close, Lincoln, LN6 3DE",
-  "77 Windsor Court, London, N14 5HT",
   "47 Pendeford Mill Lane, Codsall, WV8 1JG",
   "4 The Mews, Pulborough, RH20 2BB",
   "71 Norbury Road, Feltham, TW13 4SR",
@@ -144,11 +143,11 @@ users = ['alex.terenda@gmail.com', 'jake.howlett@gmail.com', 'louis.leslie@gmail
 
 # add 16 random users to have 20 users to add
 16.times do
-  q = Faker::TvShows::RuPaul.queen
-  until q.split(" ").size == 2 && (q.include? "'") == false
-    q = Faker::TvShows::RuPaul.queen
+  name = Faker::Name.name
+  until name.split(" ").size == 2 && (name.include? "'") == false
+    name = Faker::Name.name
   end
-  users << "#{q.split(" ")[0].downcase}.#{q.split(" ")[1].downcase}@rupaul.com"
+  users << "#{name.split(" ")[0].downcase}.#{name.split(" ")[1].downcase}@email.com"
 end
 
 # Property Types with an initial range of the number of bedrooms (source: Airbnb.com):
@@ -186,7 +185,7 @@ users.each do |user|
               )
     addresses.delete(property.address)
     count = 0
-    3.times do
+    2.times do
       count += 1
       url = "https://source.unsplash.com/random?sig=#{rand(1..60)}/&apartment/800x600"
       file = URI.open(url)
@@ -195,14 +194,14 @@ users.each do |user|
   end
 end
 
-15.times do
+30.times do
   user = User.find_by(email: users.sample)
   (3..10).to_a.sample.times do
     random_number = (0..30).to_a.sample
     random_length = (1..14).to_a.sample
     random_property = Property.all.sample
     booking = Booking.create(status: "Pending", start_date: Date.today - random_number, end_date: Date.today - random_number + random_length, property_id: random_property.id, number_of_guests: (1..random_property.total_occupancy).to_a.sample, user_id:user.id)
-    Review.create(property_id: random_property.id, content: Faker::TvShows::RuPaul.quote, rating: (1..5).to_a.sample, booking_id: booking.id)
+    Review.create(property_id: random_property.id, content: Faker::Movies::HitchhikersGuideToTheGalaxy.quote, rating: (1..5).to_a.sample, booking_id: booking.id)
   end
   # Faker::TvShows::RuPaul.quote
 end
