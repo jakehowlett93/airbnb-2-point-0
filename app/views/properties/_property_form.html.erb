@@ -13,7 +13,7 @@
     <%= f.input :has_aircon, label: "Aircon" %>
     <%= f.input :has_heating, label: "Heating" %>
     <%= f.input :has_internet, label: "Wifi" %>
-    <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+    <%= f.input :photos, as: :file, input_html: { multiple: true }, required: true %>
     <%= f.submit "Submit", class: "btn btn-primary" %>
   <% end %>
 </div>
