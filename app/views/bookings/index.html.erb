@@ -39,7 +39,7 @@
     </div>
     <div class="tab-pane fade" id="property-bookings-tab">
       <% if @properties.empty? %>
-        <%= link_to "Add a property to get bookings", new_property_path, class: "card-title pink" %>
+        <%= link_to "Add a property to get bookings", new_property_path, class: "form-button-primary my-5 mx-auto" %>
       <% else %>
       <h2 class='my-3'>My Property Bookings</h2>
         <% @properties.each do |property| %>
