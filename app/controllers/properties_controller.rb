@@ -9,9 +9,14 @@ class PropertiesController < ApplicationController
     @property = Property.new(property_params)
     @property.name = @property.name.capitalize
     @property.user = current_user
-    if @property.save
-      redirect_to property_path(@property)
+    if @property.photos.attached?
+      if @property.save
+        redirect_to property_path(@property)  
+      else
+        render :new
+      end
     else
+      flash[:alert] = "You must upload atleast 1 image"
       render :new
     end
   end
