@@ -41,6 +41,13 @@
         </div>
       <% end %>
 
+      <%= link_to properties_path(query: "London") do %>
+        <div class="location-card">
+          <img src="https://a0.muscache.com/im/pictures/c2eba2e9-0d80-4704-9e2c-34ac16316c53.jpg?im_q=medq&im_w=240" alt="" class="location-image">
+          <h2 class="location-title">London</h2>
+        </div>
+      <% end %>
+
       <%= link_to properties_path(query: "Birmingham") do %>
         <div class="location-card">
           <img src="https://a0.muscache.com/im/pictures/3849e3f1-d275-43fb-8957-4c90f26e14db.jpg?im_q=medq&im_w=240" alt="" class="location-image">
@@ -54,14 +61,6 @@
           <h2 class="location-title">Lincoln</h2>
         </div>
       <% end %>
-
-      <%= link_to properties_path(query: "Thornbury") do %>
-        <div class="location-card">
-          <img src="https://a0.muscache.com/im/pictures/c2eba2e9-0d80-4704-9e2c-34ac16316c53.jpg?im_q=medq&im_w=240" alt="" class="location-image">
-          <h2 class="location-title">Thornbury</h2>
-        </div>
-      <% end %>
-
 
       </div>
     </div>
