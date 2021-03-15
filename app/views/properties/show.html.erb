@@ -1,8 +1,8 @@
 
 <div class="container">
-  <%= link_to "Back to Properties", properties_path %>
+<div class="show-container mt-2">
   <div class="d-flex justify-content-between">
-    <h1><%= "#{@property.name}"%></h1>
+    <h1 class="pink"><%= "#{@property.name}"%></h1>
     <% if (current_user.favourite_ids & @property.favourite_ids).any? %>
       <div class="button-container">
         <%= link_to property_favourite_path(@property), method: :delete, remote: true, id: "remove-favourite" do %>
@@ -17,9 +17,9 @@
       </div>
     <% end %>
   </div>
-  <div class="container" style="height: 75vh; background-color: white;">
-    <div id="propertyCarousel" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
+  <div class="show-image-container">
+    <div id="propertyCarousel" class="carousel slide show-image" data-ride="carousel">
+      <div class="carousel-inner show-image-border">
         <% counter = 0 %>
         <% @property.photos.each do |photo| %>
           <% if counter == 0 %>
@@ -49,14 +49,14 @@
       <p><strong>Hosted by:</strong> <%= @property.user.first_name %> <%= @property.user.last_name %></p>
 
       <p><%= @property.summary %></p>
-      <div class="card-spacer"></div>
+      <div class="grey-line"></div>
       <p><%= @property.address %></p>
 
-      <div class="card-spacer"></div>
+      <div class="grey-line"></div>
       <p>Bedrooms: <%= @property.total_bedrooms %></p>
       <p>Bathrooms: <%= @property.total_bathrooms %></p>
       <p>Max Guests: <%= @property.total_occupancy %></p>
-      <div class="card-spacer"></div>
+      <div class="grey-line"></div>
       <ul class="property-feature-list" style="list-style: none;">
         <li <%= @property.has_kitchen ? "" : 'style=color:grey;' %>><%= @property.has_kitchen ? '😊 Kitchen' : '😞 Kitchen' %></li>
         <li <%= @property.has_internet ? "" : 'style=color:grey;' %>><%= @property.has_internet ? "😊 Internet" : "😞 Internet" %></li>
@@ -78,7 +78,7 @@
       </div>
     <% end %>
     </div>
-     <div class="mt-2 py-2 justify-content-between">
+    <div class="mt-2 py-2 justify-content-between">
       <h2>Reviews of the property</h2>
       <% numberofreviews = @property.reviews.count %>
       <% sumofreviewratings = @property.reviews.map(&:rating).sum %>
@@ -93,10 +93,11 @@
       <div><%= review.content %></div>
     </div>
     <% end %>
-     </div>
-     <% else %>
+    </div>
+    <% else %>
     <h2>This property has not been reviewed yet.</h2>
     <% end %>
   </div>
-     </div>
+    </div>
+  </div>
 </div>
