@@ -1,103 +1,107 @@
 
 <div class="container">
-<div class="show-container mt-2">
-  <div class="d-flex justify-content-between">
-    <h1 class="pink"><%= "#{@property.name}"%></h1>
-    <% if (current_user.favourite_ids & @property.favourite_ids).any? %>
-      <div class="button-container">
-        <%= link_to property_favourite_path(@property), method: :delete, remote: true, id: "remove-favourite" do %>
-          <%= image_tag 'filled-favourite.svg', class: 'favourite-button-red'%>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="button-container">
-        <%= link_to property_favourites_path(@property), method: :post, remote: true, id: "add-favourite"  do %>
-          <%= image_tag 'favourite.svg', class: 'favourite-button'%>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="show-image-container">
-    <div id="propertyCarousel" class="carousel slide show-image" data-ride="carousel">
-      <div class="carousel-inner show-image-border">
-        <% counter = 0 %>
-        <% @property.photos.each do |photo| %>
-          <% if counter == 0 %>
-            <div class="carousel-item active">
-          <% else %>
-            <div class="carousel-item">
-            <% end %>
-            <%= cl_image_tag photo.key, class:"d-block w-100", cloud_name: "dpaknqo5h", style: "object-fit: cover; height: 75vh;" %>
-          </div>
-          <% counter += 1 %>
-        <% end %>
-      </div>
-      <a class="carousel-control-prev" href="#propertyCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#propertyCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+  <div class="show-container mt-2">
+    <div class="d-flex justify-content-between">
+      <h1 class="pink"><%= "#{@property.name}"%></h1>
+      <% if (current_user.favourite_ids & @property.favourite_ids).any? %>
+        <div class="button-container">
+          <%= link_to property_favourite_path(@property), method: :delete, remote: true, id: "remove-favourite" do %>
+            <%= image_tag 'filled-favourite.svg', class: 'favourite-button-red'%>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="button-container">
+          <%= link_to property_favourites_path(@property), method: :post, remote: true, id: "add-favourite"  do %>
+            <%= image_tag 'favourite.svg', class: 'favourite-button'%>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  </div>
-  <div class="d-flex flex-wrap justify-content-between">
-    <div class="property-details" style="width: 50%; padding: 10px; background-color: white;">
-    <div class="show-card"> 
-      <h3><strong>£<%= @property.price_per_night.round(2) %></strong> / night</h3>
-      <p><strong class="pink">Hosted by:</strong> <%= @property.user.first_name %> <%= @property.user.last_name %></p>
-
-      <p><%= @property.summary %></p>
-      <div class="grey-line"></div>
-      <p><%= @property.address %></p>
-
-      <div class="grey-line"></div>
-      <p>Bedrooms: <%= @property.total_bedrooms %></p>
-      <p>Bathrooms: <%= @property.total_bathrooms %></p>
-      <p>Max Guests: <%= @property.total_occupancy %></p>
-      <div class="grey-line"></div>
-      <ul class="property-feature-list" style="list-style: none;">
-        <li <%= @property.has_kitchen ? "" : 'style=color:grey;' %>><%= @property.has_kitchen ? '😊 Kitchen' : '😞 Kitchen' %></li>
-        <li <%= @property.has_internet ? "" : 'style=color:grey;' %>><%= @property.has_internet ? "😊 Internet" : "😞 Internet" %></li>
-        <li <%= @property.has_aircon ? "" : 'style=color:grey;' %>><%= @property.has_aircon ? "😊 Air Con" : "😞 Air Con" %></li>
-        <li  <%= @property.has_heating ? "" : 'style=color:grey;' %>><%= @property.has_heating ? "😊 Heating" : "😞 Heating" %></li>
-      </ul>
-      </div>
-    </div>
-    <% if current_user == @property.user %>
-      <div class="owner-controls" style="width: 50%; padding: 10px; background-color: white;">
-        <h2>You own this property</h2>
-        <%= link_to "Edit", edit_property_path(@property), class: "btn btn-success" %>
-        <%= link_to "Delete", property_path(@property), method: "delete", class: "btn btn-danger", data: { confirm: "Remove This Property?" }%>
-      <div>
-    <% else %>
-      <div id="booking-form" class="mt-3" style="width: 50%; padding: 10px; background-color: white;">
-        <h2>Booking Form</h2>
-        <%= render "bookings/booking_form", property: @property, booking: @booking %>
-      </div>
-    <% end %>
-    </div>
-    <div class="mt-2 py-2 justify-content-between">
-      <h2>Reviews of the property</h2>
-      <% numberofreviews = @property.reviews.count %>
-      <% sumofreviewratings = @property.reviews.map(&:rating).sum %>
-      <% unless @property.reviews.nil? %>
-      <% avg_review = sumofreviewratings / numberofreviews.to_i %>
-      <h2>Average rating: <%= avg_review %> ⭐ </h2>
-      <% @property.reviews.each do |review| %>
-        <div class="review-container my-2">
-          <div class="mt-2"> <p><strong><%= review.rating %></strong> ⭐  <strong>Reviewed by</strong>
-            <%="#{review.booking.user.first_name} #{review.booking.user.last_name}"%></p>
+    <div class="show-image-container">
+      <div id="propertyCarousel" class="carousel slide show-image" data-ride="carousel">
+        <div class="carousel-inner show-image-border">
+          <% counter = 0 %>
+          <% @property.photos.each do |photo| %>
+            <% if counter == 0 %>
+              <div class="carousel-item active">
+            <% else %>
+              <div class="carousel-item">
+              <% end %>
+              <%= cl_image_tag photo.key, class:"d-block w-100", cloud_name: "dpaknqo5h", style: "object-fit: cover; height: 75vh;" %>
             </div>
-      <div><%= review.content %></div>
+            <% counter += 1 %>
+          <% end %>
+        </div>
+        <a class="carousel-control-prev" href="#propertyCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#propertyCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
     </div>
-    <% end %>
-    </div>
-    <% else %>
-    <h2>This property has not been reviewed yet.</h2>
-    <% end %>
-  </div>
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="property-details" style="width: 50%; padding: 10px; background-color: white;">
+      <div class="show-card"> 
+        <h3><strong>£<%= @property.price_per_night.round(2) %></strong> / night</h3>
+        <p><strong class="pink">Hosted by:</strong> <%= @property.user.first_name %> <%= @property.user.last_name %></p>
+
+        <p><%= @property.summary %></p>
+        <div class="grey-line"></div>
+        <p><%= @property.address %></p>
+
+        <div class="grey-line"></div>
+        <p>Bedrooms: <%= @property.total_bedrooms %></p>
+        <p>Bathrooms: <%= @property.total_bathrooms %></p>
+        <p>Max Guests: <%= @property.total_occupancy %></p>
+        <div class="grey-line"></div>
+        <ul class="property-feature-list" style="list-style: none;">
+          <li <%= @property.has_kitchen ? "" : 'style=color:grey;' %>><%= @property.has_kitchen ? '😊 Kitchen' : '😞 Kitchen' %></li>
+          <li <%= @property.has_internet ? "" : 'style=color:grey;' %>><%= @property.has_internet ? "😊 Internet" : "😞 Internet" %></li>
+          <li <%= @property.has_aircon ? "" : 'style=color:grey;' %>><%= @property.has_aircon ? "😊 Air Con" : "😞 Air Con" %></li>
+          <li  <%= @property.has_heating ? "" : 'style=color:grey;' %>><%= @property.has_heating ? "😊 Heating" : "😞 Heating" %></li>
+        </ul>
+        </div>
+      </div>
+      <% if current_user == @property.user %>
+        <div class="owner-controls" style="width: 50%; padding: 10px; background-color: white;">
+          <h2>You own this property</h2>
+          <%= link_to "Edit", edit_property_path(@property), class: "btn btn-success" %>
+          <%= link_to "Delete", property_path(@property), method: "delete", class: "btn btn-danger", data: { confirm: "Remove This Property?" }%>
+        <div>
+      <% else %>
+        <div id="booking-form" class="mt-3" style="width: 50%; padding: 10px; background-color: white;">
+          <h2>Booking Form</h2>
+          <%= render "bookings/booking_form", property: @property, booking: @booking %>
+        </div>
+      <% end %>
+      </div>
+      <div class="mt-2 py-2 justify-content-between">
+        <h2>Reviews</h2>
+        <% numberofreviews = @property.reviews.count %>
+        <% sumofreviewratings = @property.reviews.map(&:rating).sum %>
+        <% unless @property.reviews.nil? %>
+          <% avg_review = sumofreviewratings / numberofreviews.to_i %>
+          <p>Average rating: <%= avg_review %> ⭐ </p>
+          <% @property.reviews.each do |review| %>
+            <div class="review-container my-2">
+              <div class="mt-2"> 
+                <p>
+                  <strong><%= review.rating %></strong> ⭐
+                  <strong><%="#{review.booking.user.first_name} #{review.booking.user.last_name}"%></strong>
+                </p>
+              </div>
+              <div><%= review.content %></div>
+            </div>
+            <div class="grey-line"></div>
+          <% end %>
+          </div>
+        <% else %>
+          <h2>This property has not been reviewed yet.</h2>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
