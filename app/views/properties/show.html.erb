@@ -46,7 +46,7 @@
     <div class="property-details" style="width: 50%; padding: 10px; background-color: white;">
     <div class="show-card"> 
       <h3><strong>£<%= @property.price_per_night.round(2) %></strong> / night</h3>
-      <p><strong>Hosted by:</strong> <%= @property.user.first_name %> <%= @property.user.last_name %></p>
+      <p><strong class="pink">Hosted by:</strong> <%= @property.user.first_name %> <%= @property.user.last_name %></p>
 
       <p><%= @property.summary %></p>
       <div class="grey-line"></div>
@@ -72,7 +72,7 @@
         <%= link_to "Delete", property_path(@property), method: "delete", class: "btn btn-danger", data: { confirm: "Remove This Property?" }%>
       <div>
     <% else %>
-      <div class="booking-form" style="width: 50%; padding: 10px; background-color: white;">
+      <div id="booking-form" class="mt-3" style="width: 50%; padding: 10px; background-color: white;">
         <h2>Booking Form</h2>
         <%= render "bookings/booking_form", property: @property, booking: @booking %>
       </div>
